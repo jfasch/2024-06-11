@@ -1,6 +1,9 @@
 #pragma once
 #include <sink-logger.h>
 #include <sensor-config.h>
+
+#include <cstdint>
+
 /**
  * @class DataLogger
  * @brief A class responsible for logging sensor data at specified intervals.

@@ -1,5 +1,5 @@
 #pragma once
-#include <switch.h>
+#include "switch.h"
 
 class MockSwitch : public Switch
 {

@@ -1,0 +1,21 @@
+add_library(
+  data-logger
+
+  data-logger.h
+  data-logger.cpp
+  sensor-config.h
+  sensor-values.h
+  sink-file.h
+  sink-logger.h
+  sink-terminal.h
+  sink-mock.h
+)
+target_include_directories(
+  data-logger
+  PUBLIC
+  .
+)
+target_link_libraries(
+  data-logger
+  base
+)

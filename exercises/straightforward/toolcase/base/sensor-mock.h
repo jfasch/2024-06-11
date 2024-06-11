@@ -1,5 +1,5 @@
 #pragma once
-#include <sensor.h>
+#include "sensor.h"
 
 class MockSensor : public Sensor
 {
