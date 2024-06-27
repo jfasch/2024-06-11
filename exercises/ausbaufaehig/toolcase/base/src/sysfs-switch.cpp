@@ -1,5 +1,7 @@
 #include "sysfs-switch.h"
 
+#include "file-util.h"
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <cstring>
@@ -21,18 +23,8 @@ SysFSGPIOSwitch::~SysFSGPIOSwitch()
 void SysFSGPIOSwitch::set_state(bool state)
 {
     std::string valueFilePath = "/sys/class/gpio/gpio" + std::to_string(pinNumber) + "/value";
-    int valueFile = open(valueFilePath.c_str(), O_WRONLY);
 
-    if (valueFile != -1)
-    {
-        const char *value = (state ? "1" : "0");
-        write(valueFile, value, strlen(value));
-        close(valueFile);
-    }
-    else
-    {
-        perror("Failed to open GPIO value file");
-    }
+    write_sysfs_file(valueFilePath, (state ? "1" : "0"));
 }
 
 bool SysFSGPIOSwitch::get_state()
