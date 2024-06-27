@@ -1,0 +1,6 @@
+#pragma once
+
+#define GLUEHWEIN_MAJOR @Gluehweinkochen_VERSION_MAJOR@
+#define GLUEHWEIN_MINOR @Gluehweinkochen_VERSION_MINOR@
+
+#define HAVE_SQLITE3 @HAVE_SQLITE3@
