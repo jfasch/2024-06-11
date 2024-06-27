@@ -3,4 +3,9 @@
 #define GLUEHWEIN_MAJOR @Gluehweinkochen_VERSION_MAJOR@
 #define GLUEHWEIN_MINOR @Gluehweinkochen_VERSION_MINOR@
 
+// conditional external dependencies
 #define HAVE_SQLITE3 @HAVE_SQLITE3@
+#define HAVE_MOSQUITTO @HAVE_MOSQUITTO@
+
+
+

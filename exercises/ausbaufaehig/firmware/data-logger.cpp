@@ -2,9 +2,13 @@
 
 #include <sensor-const.h>
 #include <sensor-random.h>
+#include <sink-composite.h>
 #include <sink-terminal.h>
 #if HAVE_SQLITE3==1
 #  include <sink-sqlite3.h>
+#endif
+#if HAVE_MOSQUITTO==1
+#  include <sink-mqtt.h>
 #endif
 #include <data-logger.h>
 
@@ -37,11 +41,16 @@ int main(int argc, char** argv)
     config.add_sensor("tl", std::move(top_left));
     config.add_sensor("tr", std::move(top_right));
 
+    auto sink = std::make_unique<SinkComposite>();
+    sink->add_sink(std::make_unique<SinkTerminal>());
+
 #   if HAVE_SQLITE3==1
-    auto sink = std::make_unique<SinkSQLite3>(dbfile);
-#   else
-    auto sink = std::make_unique<SinkTerminal>();
+    sink->add_sink(std::make_unique<SinkSQLite3>(dbfile));
 #   endif
+#   if HAVE_MOSQUITTO==1
+    sink->add_sink(std::make_unique<SinkMQTT>("localhost", 1883, "gluehwein"));
+#   endif
+
     DataLogger logger(config, std::move(sink), 1000/*ms*/);
     logger.start_logging();
 

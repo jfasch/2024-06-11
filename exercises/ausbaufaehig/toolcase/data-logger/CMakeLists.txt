@@ -12,9 +12,11 @@ my_add_library(
     sensor-config.h
     measurements.h
     sink.h
+    sink-composite.h
     sink-file.h
     sink-terminal.h
     ${_sqlite3_headers}
+    sink-mqtt.h   # cond?
 
   INSTALL_PUBLIC_HEADERS
 
@@ -25,14 +27,18 @@ my_add_library(
     data-logger.cpp
     sensor-config.cpp
     measurements.cpp
+    sink-composite.cpp
     sink-file.cpp
     sink-terminal.cpp
     ${_sqlite3_sources}
+    sink-mqtt.cpp  # cond?
 )
 
 target_link_libraries(data-logger base)
 
 if (SQLite3_FOUND)
   target_link_libraries(data-logger SQLite::SQLite3)
-  target_compile_definitions(data-logger INTERFACE HAVE_SQLITE3)
+endif()
+if (Mosquitto_FOUND)
+  target_link_libraries(data-logger Mosquitto::Mosquitto)
 endif()
